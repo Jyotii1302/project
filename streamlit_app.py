@@ -29,7 +29,8 @@ pg = st.navigation(
 )
 
 # --- SHARED ON ALL PAGES ---
-st.image("project/asset/profile_image.jpg", width=150)
+st.image("profile_image.jpg", width=150)
+
 st.sidebar.markdown("Made with ❤️ by [Jyoti Houdhary](https://github.com/Jyotii1302)")
 
 # --- RUN NAVIGATION ---
