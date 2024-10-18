@@ -23,13 +23,13 @@ chatbot_page = st.Page(
 pg = st.navigation(
     {
         "Info": [about_page],  # About Me section
-        "Projects": [pcos_detection_page, chatbot_page],  # Projects section with PCOS and Chatbot
+        "Projects": [pcos_detection_page, chatbot_page],  
     }
 )
 
 # --- SHARED ON ALL PAGES ---
-st.image("assets/profile_image.png", width=150)  # Assuming you have a profile image for About Me
-st.sidebar.markdown("Made with ❤️ by [Jyoti Houdhary](https://github.com/JyotiHoudhary)")
+st.image("assets/profile_image.jpeg", width=150)  
+st.sidebar.markdown("Made with ❤️ by [Jyoti Houdhary](https://github.com/Jyotii1302)")
 
 # --- RUN NAVIGATION ---
 pg.run()
