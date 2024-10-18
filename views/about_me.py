@@ -1,17 +1,18 @@
 import streamlit as st
 from forms.contact import contact_form
 
-@st.experimental_dialog("Contact Me")
+# Function to display contact form
 def show_contact_form():
     contact_form()
 
 # --- HERO SECTION ---
-col1, col2 = st.columns(2, gap="small", vertical_alignment="center")
+col1, col2 = st.columns([1, 3])  # Adjusted column proportions for better layout
 with col1:
+    # Using the original image path as requested
     st.image("profile_image.jpg", width=150)
 
 with col2:
-    st.title("Jyoti Houdhary", anchor=False)
+    st.title("Jyoti Houdhary")
     st.write(
         "Currently pursuing Integrated B.Tech in MTE at Lovely Professional University, Phagwara, Punjab, India. "
         "I have a keen interest in AI, ML, NLP, and Deep Learning."
@@ -21,7 +22,7 @@ with col2:
 
 # --- EXPERIENCE & QUALIFICATIONS ---
 st.write("\n")
-st.subheader("Experience & Qualifications", anchor=False)
+st.subheader("Experience & Qualifications")
 st.write(
     """
     - Strong knowledge and hands-on experience in AI and Machine Learning
@@ -32,7 +33,7 @@ st.write(
 
 # --- SKILLS ---
 st.write("\n")
-st.subheader("Hard Skills", anchor=False)
+st.subheader("Hard Skills")
 st.write(
     """
     - Programming: Python (Scikit-learn, Pandas), SQL
@@ -42,10 +43,10 @@ st.write(
     """
 )
 
-# --- FEEDBACK SECTION ---
+# --- CONTACT FORM SECTION ---
 st.write("\n")
-st.subheader("Feedback")
-st.write("If you have any suggestions, compliments, or modifications, feel free to contact me using the form below.")
+st.subheader("Contact Form")
+st.write("If you'd like to reach out, feel free to contact me using the form below.")
 
-if st.button("💬 Send Feedback"):
+if st.button("💬 Contact Me"):
     show_contact_form()
