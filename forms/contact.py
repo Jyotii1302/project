@@ -9,16 +9,16 @@ def is_valid_email(email):
     email_pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
     return re.match(email_pattern, email) is not None
 
-def feedback_form():
-    with st.form("feedback_form"):
+def contact_form():
+    with st.form("contact_form"):
         name = st.text_input("Your Name")
         email = st.text_input("Your Email Address")
-        feedback = st.text_area("Your Feedback")
-        submit_button = st.form_submit_button("Send Feedback")
+        message = st.text_area("Your Message")  # Changed feedback to message
+        submit_button = st.form_submit_button("Send Message")  # Updated button text
 
     if submit_button:
         if not WEBHOOK_URL:
-            st.error("Feedback service is not set up. Please try again later.", icon="📧")
+            st.error("Contact service is not set up. Please try again later.", icon="📧")
             st.stop()
 
         if not name:
@@ -33,17 +33,17 @@ def feedback_form():
             st.error("Please provide a valid email address.", icon="📧")
             st.stop()
 
-        if not feedback:
-            st.error("Please provide your feedback.", icon="💬")
+        if not message:  # Changed variable name to message
+            st.error("Please provide your message.", icon="💬")
             st.stop()
 
         # Prepare the data payload and send it to the specified webhook URL
-        data = {"email": email, "name": name, "feedback": feedback}
+        data = {"email": email, "name": name, "message": message}  # Updated to use message
         response = requests.post(WEBHOOK_URL, json=data)
 
         if response.status_code == 200:
-            st.success("Thank you for your feedback! 🎉", icon="🚀")
+            st.success("Thank you for your message! 🎉", icon="🚀")  # Updated success message
         else:
-            st.error("There was an error sending your feedback. Please try again later.", icon="😨")
+            st.error("There was an error sending your message. Please try again later.", icon="😨")  # Updated error message
 
-# To use the feedback_form function, call it in your main app file
+# To use the contact_form function, call it in your main app file
