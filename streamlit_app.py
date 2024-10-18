@@ -12,6 +12,7 @@ pcos_detection_page = st.Page(
     "views/app.py",  
     title="PCOS Detection",
     icon=":material/medical_services:", 
+)
 
 chatbot_page = st.Page(
     "views/chatbot.py",  
