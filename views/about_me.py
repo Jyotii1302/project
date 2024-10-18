@@ -8,7 +8,7 @@ def show_contact_form():
 # --- HERO SECTION ---
 col1, col2 = st.columns(2, gap="small", vertical_alignment="center")
 with col1:
-    st.image("./assets/profile_image.png", width=230)  # Replace with your profile image path
+    st.image("profile_image.jpg", width=150)
 
 with col2:
     st.title("Jyoti Houdhary", anchor=False)
