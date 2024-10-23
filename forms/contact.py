@@ -2,24 +2,27 @@ import re
 import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import json
 
-# Function to validate email format
+# Function to validate email addresses
 def is_valid_email(email):
     email_pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
     return re.match(email_pattern, email) is not None
 
 # Function to connect to Google Sheets
-def connect_to_gsheet():
-    # Load the JSON key from Streamlit secrets
-    json_key = st.secrets["GOOGLE_SHEET_JSON"]
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(json_key), scope=["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"])
-    
+def connect_to_sheets():
+    # Load credentials from Streamlit secrets
+    creds = ServiceAccountCredentials.from_json_keyfile_name(st.secrets["GCP_SERVICE_ACCOUNT"], 
+                                                             ['https://spreadsheets.google.com/feeds', 
+                                                              'https://www.googleapis.com/auth/drive'])
     client = gspread.authorize(creds)
-    sheet = client.open("Your Google Sheet Name").sheet1  # Replace with your actual sheet name
+
+    # Open the spreadsheet using its URL from secrets
+    spreadsheet_url = "https://docs.google.com/spreadsheets/d/1oD27TYdwUgwSj4SGXLOwPOHNHYB4k01pft_hzSP7o7o/edit?usp=sharing"  # Your Google Sheet URL
+    sheet = client.open_by_url(spreadsheet_url).sheet1  # Access the first sheet
+
     return sheet
 
-# Contact form function
+# Function to display the contact form and handle submissions
 def contact_form():
     with st.form("contact_form"):
         name = st.text_input("Your Name")
@@ -28,6 +31,7 @@ def contact_form():
         submit_button = st.form_submit_button("Send Message")
 
     if submit_button:
+        # Validate input fields
         if not name:
             st.error("Please provide your name.", icon="🧑")
             st.stop()
@@ -44,13 +48,14 @@ def contact_form():
             st.error("Please provide your message.", icon="💬")
             st.stop()
 
-        # Connect to Google Sheets and append the data
-        sheet = connect_to_gsheet()
-        sheet.append_row([name, email, message])  # Add the new row to the sheet
+        # Connect to Google Sheets and append data
+        sheet = connect_to_sheets()
+        row = [name, email, message]  # Prepare the row to be added
+        sheet.append_row(row)  # Append the data to the sheet
 
-        st.success("Thank you for your message! 🎉", icon="🚀")
+        st.success("Thank you for your message! 🎉")
 
-# Call the contact_form function in your main app
+# Run the contact form function
 if __name__ == "__main__":
     st.title("Contact Form")
     contact_form()
