@@ -11,12 +11,15 @@ def is_valid_email(email):
 # Function to connect to Google Sheets
 def connect_to_sheets():
     # Load credentials from Streamlit secrets
-    creds = ServiceAccountCredentials.from_json_keyfile_name(st.secrets["GCP_SERVICE_ACCOUNT"], 
+    json_key = st.secrets["google_service_account"]
+
+    # Load credentials from the JSON content
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(json_key, 
                                                              ['https://spreadsheets.google.com/feeds', 
                                                               'https://www.googleapis.com/auth/drive'])
     client = gspread.authorize(creds)
 
-    # Open the spreadsheet using its URL from secrets
+    # Open the spreadsheet using its URL
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/1oD27TYdwUgwSj4SGXLOwPOHNHYB4k01pft_hzSP7o7o/edit?usp=sharing"  # Your Google Sheet URL
     sheet = client.open_by_url(spreadsheet_url).sheet1  # Access the first sheet
 
